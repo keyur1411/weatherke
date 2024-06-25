@@ -1,21 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { GEO_API_URL, geoApioptions } from "../api.js"
+import { geoApioptions, GEO_API_URL } from "../api.js"
 
 
-const Search = (OnSearchChange) => {
+const Search = ({ OnSearchChange }) => {
 
   const [search, setSearch] = useState(null);
 
-  const loadoptions = (inputValue) =>  {
-    return fetch(`${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`, geoApioptions)
-      .then(response => response.json)
+  const loadOptions = (inputValue) => {
+    return fetch(
+    `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+       geoApioptions
+      )
+      .then(response => response.json())//error was here it i have written response.json instead of response.json()
       .then(response => {
         return {
-          options: response.data.map((city) =>{
+          options: response.data.map((city) => {
             return {
-              value:`${city.latitude},${city.longitude}` ,
-              label:`${city.name},${city.countryCode}`,
+              value: `${city.latitude},${city.longitude}`,
+              label: `${city.name},${city.countryCode}`,
             }
           })
         }
@@ -33,7 +36,7 @@ const Search = (OnSearchChange) => {
       debounceTimeout={600}
       value={search}
       onChange={handleChange}
-      loadOptions={loadoptions}
+      loadOptions={loadOptions}
     />
   );
 }
