@@ -1,18 +1,11 @@
-export const geoApioptions = {
-  method: 'GET',
+export const geoApiOptions = {
+  method: "GET",
   headers: {
-    'x-rapidapi-key': '7f8dc42495msh47135902f940684p189a7djsn61676fd82666',
-    'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com'
-  }
+    "X-RapidAPI-Key": "7f8dc42495msh47135902f940684p189a7djsn61676fd82666",// enter your rapid api key here
+    "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+  },
 };
-
 export const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
 
-// try {
-// 	const response = await fetch( "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",geoApioptions );
-// 	const result = await response.text();
-// 	console.log(result);
-// } catch (error) {
-// 	console.error(error);
-// }
-
+// export const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5";
+// export const WEATHER_API_KEY = ""; // enter your key from openweather API

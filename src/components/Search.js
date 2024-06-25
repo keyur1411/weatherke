@@ -1,41 +1,42 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { GEO_API_URL, geoApioptions } from "../api.js"
+import { geoApiOptions, GEO_API_URL } from "../api";
 
-
-const Search = (OnSearchChange) => {
-
+const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
 
-  const loadoptions = (inputValue) =>  {
-    return fetch(`${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`, geoApioptions)
-      .then(response => response.json)
-      .then(response => {
+  const loadOptions = (inputValue) => {
+    return fetch(
+      `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+      geoApiOptions
+    )
+      .then((response) => response.json())
+      .then((response) => {
         return {
-          options: response.data.map((city) =>{
+          options: response.data.map((city) => {
             return {
-              value:`${city.latitude},${city.longitude}` ,
-              label:`${city.name},${city.countryCode}`,
-            }
-          })
-        }
-      })
-      .catch(err => console.error(err));
-  }
-  const handleChange = (searchData) => {
+              value: `${city.latitude} ${city.longitude}`,
+              label: `${city.name}, ${city.countryCode}`,
+            };
+          }),
+        };
+      });
+  };
+
+  const handleOnChange = (searchData) => {
     setSearch(searchData);
-    OnSearchChange(searchData);
-  }
+    onSearchChange(searchData);
+  };
 
   return (
     <AsyncPaginate
-      placeholder="Search for City"
+      placeholder="Search for city"
       debounceTimeout={600}
       value={search}
-      onChange={handleChange}
-      loadOptions={loadoptions}
+      onChange={handleOnChange}
+      loadOptions={loadOptions}
     />
   );
-}
+};
 
 export default Search;
